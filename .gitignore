@@ -11,3 +11,4 @@ tags
 doc
 pkg
 *.gemspec
+.bundle/config
