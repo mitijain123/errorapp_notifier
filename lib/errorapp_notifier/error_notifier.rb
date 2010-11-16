@@ -6,6 +6,7 @@ module ErrorappNotifier
     def self.send_fail(notification)
       server_address, api_key = [ErrorappNotifier::Config.server_address, ErrorappNotifier::Config.api_key]
       post_address = "#{server_address}/api/projects/#{api_key}/fails"
+      Net::HTTP.post_form URI.parse(post_address), {:data => notification.to_json}
     end
   end
 end
