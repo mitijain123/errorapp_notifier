@@ -1,10 +1,10 @@
-ErrorappNotifier
+= ErrorappNotifier
 
 This is the notifier gem for integrating apps with ErrorApp.
 
 When an exception occurs, ErrorappNotifier will POST the relevant data to the ErrorApp server specified in your environment.
 
-Rails Installation
+== Rails Installation
 
 To use ErrorApp from Rails 3 application, add this to your Gemfile:
 
