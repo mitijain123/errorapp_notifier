@@ -13,6 +13,7 @@ To use ErrorApp from Rails 3 application, add this to your Gemfile:
 Next you need to add the following under config/initializer/errorapp.rb:
 
 <code>ErrorappNotifier::Config.server_address = 'http://errorapp.com/'</code>
+
 <code>ErrorappNotifier::Config.api_key = YOUR_API_KEY</code>
 
 <code>Rails.application.config.middleware.use ErrorappNotifier::ErrorMiddleware</code>
