@@ -12,3 +12,10 @@ doc
 pkg
 *.gemspec
 .bundle/config
+.idea/.rakeTasks
+.idea/encodings.xml
+.idea/errorapp_notifier.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml

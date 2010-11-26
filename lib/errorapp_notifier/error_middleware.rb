@@ -5,9 +5,9 @@ module ErrorappNotifier
   class ErrorMiddleware
     def self.default_ignore_exceptions
       [].tap do |exceptions|
-        exceptions << ::ActiveRecord::RecordNotFound if defined?(::ActiveRecord::RecordNotFound)
-        exceptions << ::AbstractController::ActionNotFound if defined?(::AbstractController::ActionNotFound)
-        exceptions << ::ActionController::RoutingError if defined?(::ActionController::RoutingError)      
+        ErrorappNotifier::Config.ignore_exceptions.each do |exception|
+          exceptions << exception if defined?(exception)
+        end
       end
     end
 
@@ -18,7 +18,7 @@ module ErrorappNotifier
     def call(env)
       @app.call(env)
     rescue Exception => exception
-      unless ErrorMiddleware.default_ignore_exceptions.include?(exception.class)
+      unless ErrorMiddleware.default_ignore_exceptions.include?(exception.class.to_s)
         send_exception_notification(env, exception)
       end
 
