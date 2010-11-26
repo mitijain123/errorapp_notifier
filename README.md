@@ -17,3 +17,10 @@ Next you need to add the following under config/initializer/errorapp.rb:
 <code>ErrorappNotifier::Config.api_key = YOUR_API_KEY</code>
 
 <code>Rails.application.config.middleware.use ErrorappNotifier::ErrorMiddleware</code>
+
+Code Submit
+------------
+
+Feel free to submit patchs and pull request for this notifier.
+
+ 
