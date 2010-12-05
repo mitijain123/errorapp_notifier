@@ -24,10 +24,7 @@ To use ErrorApp from Rails 2X application, add this to your Environment file:
 Next you need to add the following under config/errorapp_notifier.yml:
 
 <code>
-api-key: PASTE_YOUR_API_KEY_HERE
-production:
   api-key: PASTE_YOUR_PRODUCTION_PROJECT_API_KEY_HERE
-  enabled: true
 </code>
 
 
