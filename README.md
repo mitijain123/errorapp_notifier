@@ -10,17 +10,31 @@ To use ErrorApp from Rails 3 application, add this to your Gemfile:
 
 <code>gem 'errorapp_notifier'</code>
 
-Next you need to add the following under config/initializer/errorapp.rb:
+Next you need to add the following under config/errorapp_notifier.yml:
 
-<code>ErrorappNotifier::Config.server_address = 'http://errorapp.com/'</code>
 
-<code>ErrorappNotifier::Config.api_key = YOUR_API_KEY</code>
+<code>
+api-key: PASTE_YOUR_API_KEY_HERE
+production:
+  api-key: PASTE_YOUR_PRODUCTION_PROJECT_API_KEY_HERE
+  enabled: true
+</code>
 
-<code>Rails.application.config.middleware.use ErrorappNotifier::ErrorMiddleware</code>
+To use ErrorApp from Rails 2X application, add this to your Environment file:
+
+<code>config.gem 'errorapp_notifier'</code>
+
+Next you need to add the following under config/errorapp_notifier.yml:
+
+<code>
+api-key: PASTE_YOUR_API_KEY_HERE
+production:
+  api-key: PASTE_YOUR_PRODUCTION_PROJECT_API_KEY_HERE
+  enabled: true
+</code>
+
 
 Code Submit
 ------------
 
-Feel free to submit patchs and pull request for this notifier.
-
- 
+Feel free to submit patchs and pull request for this notifier. 

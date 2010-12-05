@@ -1,13 +1,46 @@
+require 'zlib'
+require 'cgi'
 require 'net/http'
-require 'uri'
+require 'net/https'
+require 'digest/md5'
 
 module ErrorappNotifier
   class ErrorNotifier
-    def self.send_fail(notification)
-      puts "Sending error to #{ErrorappNotifier::Config.server_address}"
-      server_address, api_key = [ErrorappNotifier::Config.server_address, ErrorappNotifier::Config.api_key]
-      post_address = "#{server_address}/api/projects/#{api_key}/fails"
-      Net::HTTP.post_form URI.parse(post_address), {:data => notification.to_json}
+    class << self
+      def send_error(exception_data)
+        uniqueness_hash = exception_data.uniqueness_hash
+        hash_param = uniqueness_hash.nil? ? nil: "&hash=#{uniqueness_hash}"
+        url = "/api/projects/#{::ErrorappNotifier::Config.api_key}/fails?protocol_version=#{::ErrorappNotifier::PROTOCOL_VERSION}#{hash_param}"
+        data = exception_data.to_json
+        call_remote(url, data)
+      end
+
+      def call_remote(url, data)
+        config = ErrorappNotifier::Config
+        optional_proxy = Net::HTTP::Proxy(config.http_proxy_host,
+                                          config.http_proxy_port,
+                                          config.http_proxy_username,
+                                          config.http_proxy_password)
+        client = optional_proxy.new(config.remote_host, config.remote_port)
+        client.open_timeout = config.http_open_timeout
+        client.read_timeout = config.http_read_timeout
+        client.use_ssl = config.ssl?
+        client.verify_mode = OpenSSL::SSL::VERIFY_NONE if config.ssl?
+        begin
+          response = client.post(url, "data=#{data}")
+          case response
+            when Net::HTTPSuccess
+              ErrorappNotifier.logger.info( "#{url} - #{response.message}")
+              return true
+            else
+              ErrorappNotifier.logger.error("#{url} - #{response.code} - #{response.message}")
+          end
+        rescue Exception => e
+          ErrorappNotifier.logger.error('Problem notifying Errorapp about the error')
+          ErrorappNotifier.logger.error(e)
+        end
+        nil
+      end
     end
   end
 end
