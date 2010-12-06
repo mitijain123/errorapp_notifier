@@ -6,7 +6,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = "ErrorApp is a webapp for monitoring exceptions and other failures in your live applications."
   gem.authors = ["Arun Agrawal", "Vishnu Atrai"]
   gem.homepage = "https://github.com/rubyrockers/errorapp_notifier"
-  gem.files = Dir.glob('lib/**/*.rb')
+  #gem.files = Dir.glob('lib/**/*.rb')
   gem.test_files = []
 end
 
